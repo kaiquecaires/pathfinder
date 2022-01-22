@@ -1,0 +1,81 @@
+#board {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+#board_content, td {
+  height: 30px;
+  width: 30px;
+  border: 1px solid rgb(118, 184, 238);
+}
+
+.start-node > i {
+  margin-left: 5px;
+  font-size: 20px;
+  color: blueviolet;
+}
+
+.finish-node > i {
+  margin-left: 3px;
+  font-size: 20px;
+  color: tomato;
+}
+
+.wall {
+  animation: nodeClickedAnimation 0.2s;
+  background-color: #0c3547;
+  border: 1px solid #0c3547;
+}
+
+@keyframes nodeClickedAnimation {
+  0% {
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.4);
+  }
+}
+
+.actions_container {
+  height: 50px;
+}
+
+.actions_container .action_button {
+  background-color: #1abc9c;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bolder;
+  color: #fff;
+  cursor: pointer;
+}
+
+.isVisited {
+  animation: isVisitedAnimation 1s ease-in;
+  background-color: rgba(0, 190, 218, 0.75);
+  border: white;
+}
+
+@keyframes isVisitedAnimation {
+  0% {
+    transform: scale(.3);
+    border-radius: 30%;
+    background-color: rgba(0, 0, 66, 0.75);
+  }
+  50% {
+    background-color: rgba(17, 104, 217, 0.75);
+    border-radius: 50%;
+    transform: scale(.6);
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(0, 217, 159, 0.75);
+  }
+  100% {
+    transform: scale(1.0);
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+}
