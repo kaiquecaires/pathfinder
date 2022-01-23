@@ -2,6 +2,7 @@ const { columns, grid, rows, startCol, startRow } = getInitialGrid()
 createBoard()
 document.getElementById('clear_board').addEventListener('click', clearBoard)
 document.getElementById('dfs').addEventListener('click', () => {
+  clearBeforeStart()
   depthFirstSearch({ grid, startCol, startRow })
 })
 
@@ -87,5 +88,30 @@ function clearBoard () {
     item.classList.remove('isVisited')
     const [row, column] = item.id.split('-')
     grid[row][column].isVisited = false 
+  })
+
+  const revisited = document.getElementsByClassName('revisited')
+  Array.from(revisited).forEach(item => {
+    item.classList.remove('revisited')
+    const [row, column] = item.id.split('-')
+    grid[row][column].revisited = false
+    grid[row][column].isVisited = false
+  })
+}
+
+function clearBeforeStart () {
+  const isVisited = document.getElementsByClassName('isVisited')
+  Array.from(isVisited).forEach(item => {
+    item.classList.remove('isVisited')
+    const [row, column] = item.id.split('-')
+    grid[row][column].isVisited = false 
+  })
+
+  const revisited = document.getElementsByClassName('revisited')
+  Array.from(revisited).forEach(item => {
+    item.classList.remove('revisited')
+    const [row, column] = item.id.split('-')
+    grid[row][column].revisited = false 
+    grid[row][column].isVisited = false
   })
 }

@@ -27,8 +27,9 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
   }
 
   function direction (currentRow, currentCol, timingForAnimation) {
+    const revisited = grid[currentRow][currentCol]?.revisited
     setTimeout(() => {
-      document.getElementById(`${currentRow}-${currentCol}`).classList.add('isVisited')
+      animate(`${currentRow}-${currentCol}`, revisited)
     }, 20 * timingForAnimation)
 
     timingForAnimation = timingForAnimation + 1
@@ -62,10 +63,23 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
       return goLeft(currentRow, currentCol - 1, timingForAnimation)
     } else {
       if (!grid[currentRow][currentCol].isStart && !grid[currentRow][currentCol].wall) {
+        const row = grid[currentRow][currentCol].prevNode.row
+        const col = grid[currentRow][currentCol].prevNode.col
+        grid[row][col].revisited = !grid[row][col].revisited
         return direction(grid[currentRow][currentCol].prevNode.row, grid[currentRow][currentCol].prevNode.col, timingForAnimation)
       }
     }
 
     return false
+  }
+
+  function animate(id, revisited) {
+    if (!revisited) {
+      document.getElementById(id).classList.remove('revisited')
+      document.getElementById(id).classList.add('isVisited')
+    } else {
+      document.getElementById(id).classList.remove('isVisited')
+      document.getElementById(id).classList.add('revisited')
+    }
   }
 }
