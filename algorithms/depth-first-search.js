@@ -62,11 +62,14 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
       }
       return goLeft(currentRow, currentCol - 1, timingForAnimation)
     } else {
-      if (!grid[currentRow][currentCol].isStart && !grid[currentRow][currentCol].wall) {
+      if (!grid[currentRow][currentCol].isStart && !grid[currentRow][currentCol].isWall) {
         const row = grid[currentRow][currentCol].prevNode.row
         const col = grid[currentRow][currentCol].prevNode.col
+        const prevNodeCol = grid[currentRow][currentCol].prevNode.col
+        const prevNodeRow = grid[currentRow][currentCol].prevNode.row
         grid[row][col].revisited = !grid[row][col].revisited
-        return direction(grid[currentRow][currentCol].prevNode.row, grid[currentRow][currentCol].prevNode.col, timingForAnimation)
+        grid[row][col].isVisited = !grid[row][col].isVisited
+        return direction(prevNodeRow, prevNodeCol, timingForAnimation)
       }
     }
 

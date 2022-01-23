@@ -64,7 +64,7 @@
 }
 
 .isVisited {
-  animation: isVisitedAnimation 1s ease-in;
+  animation: isVisitedAnimation 1s ease-in-out;
   background-color: rgba(0, 190, 218, 0.75);
   border: 1px solid white;
 }
@@ -93,7 +93,7 @@
 .revisited {
   background-color: rgba(255, 240, 24, 0.979);
   border: 1px solid white;
-  animation: revisitedAnimation 1s ease-in;
+  animation: revisitedAnimation 1s ease-in-out;
 }
 
 @keyframes revisitedAnimation {
