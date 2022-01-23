@@ -1,88 +1,49 @@
 function depthFirstSearch ({ grid, startCol, startRow }) {
-  let timingForAnimation = 0
-  return direction(startRow, startCol, timingForAnimation)
-  
-  function goTop(currentRow, currentCol, timingForAnimation) {
-    grid[currentRow][currentCol].isVisited = true
-    timingForAnimation = timingForAnimation + 1
-    return direction(currentRow--, currentCol, timingForAnimation)
-  }
+  let currentNode = grid[startRow][startCol]
+  let count = 0
 
-  function goRight(currentRow, currentCol, timingForAnimation) {
-    grid[currentRow][currentCol].isVisited = true
-    timingForAnimation = timingForAnimation + 1
-    return direction(currentRow, currentCol++, timingForAnimation)
-  }
+  while (currentNode) {
+    animate(`${currentNode.row}-${currentNode.col}`, count)
 
-  function goBottom (currentRow, currentCol, timingForAnimation) {
-    grid[currentRow][currentCol].isVisited = true
-    timingForAnimation = timingForAnimation + 1
-    return direction(currentRow++, currentCol, timingForAnimation)
-  }
-
-  function goLeft(currentRow, currentCol, timingForAnimation) {
-    grid[currentRow][currentCol].isVisited = true
-    timingForAnimation = timingForAnimation + 1
-    return direction(currentRow, currentCol--, timingForAnimation)
-  }
-
-  function direction (currentRow, currentCol, timingForAnimation) {
-    const revisited = grid[currentRow][currentCol]?.revisited
-    setTimeout(() => {
-      animate(`${currentRow}-${currentCol}`, revisited)
-    }, 20 * timingForAnimation)
-
-    timingForAnimation = timingForAnimation + 1
-    if (grid[currentRow][currentCol]?.isFinish) {
-      return grid[currentRow][currentCol]
+    if (currentNode.isFinish) {
+      return false
     }
-    const topNode = grid[currentRow - 1]?.[currentCol]
-    const rightNode = grid[currentRow]?.[currentCol + 1]
-    const bottomNode = grid[currentRow + 1]?.[currentCol]
-    const leftNode = grid[currentRow]?.[currentCol - 1]
 
-    if (topNode && !topNode?.isVisited && !topNode?.isWall) {
-      if (!grid[currentRow - 1][currentCol].prevNode) {
-        grid[currentRow - 1][currentCol].prevNode = grid[currentRow][currentCol]
-      }
-      return goTop(currentRow - 1, currentCol, timingForAnimation)
-    }else if (rightNode && !rightNode?.isVisited && !rightNode?.isWall) {
-      if (!grid[currentRow][currentCol + 1].prevNode) {
-        grid[currentRow][currentCol + 1].prevNode = grid[currentRow][currentCol]
-      }
-      return goRight(currentRow, currentCol + 1, timingForAnimation)
-    } else if (bottomNode && !bottomNode?.isVisited && !bottomNode?.isWall) {
-      if (!grid[currentRow + 1][currentCol].prevNode) {
-        grid[currentRow + 1][currentCol].prevNode = grid[currentRow][currentCol]
-      }
-      return goBottom(currentRow + 1, currentCol, timingForAnimation)
-    } else if (leftNode && !leftNode?.isVisited && !leftNode?.isWall) {
-      if (!grid[currentRow][currentCol - 1].prevNode) {
-        grid[currentRow][currentCol - 1].prevNode = grid[currentRow][currentCol]
-      }
-      return goLeft(currentRow, currentCol - 1, timingForAnimation)
+    grid[currentNode.row][currentNode.col].isVisited = true
+    const topNode = grid[currentNode.row - 1]?.[currentNode.col]
+    const right = grid[currentNode.row][currentNode.col + 1]
+    const bottom = grid[currentNode.row + 1]?.[currentNode.col]
+    const left = grid[currentNode.row][currentNode.col - 1]
+
+    if (topNode && !topNode?.isWall && !topNode?.isVisited) {
+      grid[topNode.row][topNode.col].prevNode = currentNode 
+      currentNode = topNode
+    } else if (right && !right?.isWall && !right?.isVisited) {
+      grid[right.row][right.col].prevNode = currentNode
+      currentNode = right
+    } else if (bottom && !bottom?.isWall && !bottom?.isVisited) {
+      grid[bottom.row][bottom.col].prevNode = currentNode 
+      currentNode = bottom
+    } else if (left && !left?.isWall && !left?.isVisited) {
+      grid[left.row][left.col].prevNode = currentNode 
+      currentNode = left
     } else {
-      if (!grid[currentRow][currentCol].isStart && !grid[currentRow][currentCol].isWall) {
-        const row = grid[currentRow][currentCol].prevNode.row
-        const col = grid[currentRow][currentCol].prevNode.col
-        const prevNodeCol = grid[currentRow][currentCol].prevNode.col
-        const prevNodeRow = grid[currentRow][currentCol].prevNode.row
-        grid[row][col].revisited = !grid[row][col].revisited
-        grid[row][col].isVisited = !grid[row][col].isVisited
-        return direction(prevNodeRow, prevNodeCol, timingForAnimation)
-      }
+      currentNode = currentNode.prevNode
     }
 
-    return false
+    count++
   }
+}
 
-  function animate(id, revisited) {
-    if (!revisited) {
-      document.getElementById(id).classList.remove('revisited')
-      document.getElementById(id).classList.add('isVisited')
+function animate (id, count) {
+  setTimeout(() => {
+    const element = document.getElementById(id)
+    if (!element.classList.contains('isVisited')) {
+      element.classList.remove('revisited')
+      element.classList.add('isVisited')
     } else {
-      document.getElementById(id).classList.remove('isVisited')
-      document.getElementById(id).classList.add('revisited')
+      element.classList.add('revisited')
+      element.classList.remove('isVisited')
     }
-  }
+  }, count * 20)
 }
