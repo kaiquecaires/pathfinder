@@ -4,7 +4,8 @@ const createNode = (col, row, isStart = false, isFinish = false) => ({
   isStart,
   isFinish,
   isVisited: false,
-  isWall: false
+  isWall: false,
+  prevNode: null
 })
 
 function getInitialGrid () {
