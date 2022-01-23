@@ -56,7 +56,7 @@
 .isVisited {
   animation: isVisitedAnimation 1s ease-in;
   background-color: rgba(0, 190, 218, 0.75);
-  border: white;
+  border: 1px solid white;
 }
 
 @keyframes isVisitedAnimation {
