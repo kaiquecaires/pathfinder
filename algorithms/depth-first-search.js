@@ -29,7 +29,7 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
   function direction (currentRow, currentCol, timingForAnimation) {
     setTimeout(() => {
       document.getElementById(`${currentRow}-${currentCol}`).classList.add('isVisited')
-    }, 30 * timingForAnimation)
+    }, 20 * timingForAnimation)
 
     timingForAnimation = timingForAnimation + 1
     if (grid[currentRow][currentCol]?.isFinish) {
@@ -61,7 +61,7 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
       }
       return goLeft(currentRow, currentCol - 1, timingForAnimation)
     } else {
-      if (!grid[currentRow][currentCol].isStart) {
+      if (!grid[currentRow][currentCol].isStart && !grid[currentRow][currentCol].wall) {
         return direction(grid[currentRow][currentCol].prevNode.row, grid[currentRow][currentCol].prevNode.col, timingForAnimation)
       }
     }
