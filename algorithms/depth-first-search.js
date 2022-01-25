@@ -6,7 +6,7 @@ function depthFirstSearch ({ grid, startCol, startRow }) {
     animate(`${currentNode.row}-${currentNode.col}`, count)
 
     if (currentNode.isFinish) {
-      return false
+      return currentNode
     }
 
     grid[currentNode.row][currentNode.col].isVisited = true

@@ -5,6 +5,10 @@ document.getElementById('dfs').addEventListener('click', () => {
   clearBeforeStart()
   depthFirstSearch({ grid, startCol, startRow })
 })
+document.getElementById('bfs').addEventListener('click', () => {
+  clearBeforeStart()
+  breadhFirstSearch({ grid, startCol, startRow })
+})
 
 function createBoard () {
   let boardHtml = ''
