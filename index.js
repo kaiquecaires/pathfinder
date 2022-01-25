@@ -49,7 +49,9 @@ function boardEvent (board) {
   function nodeClick (event) {
     onMouseOutEvent = !onMouseOutEvent
     fillNode(event)
-    if (onMouseOutEvent) {
+    const [row, column] = event.target.id.split('-')
+    const node = grid[row][column]
+    if (onMouseOutEvent && node.isWall) {
       board.addEventListener('mouseout', fillNode)
     } else {
       board.removeEventListener('mouseout', fillNode)
